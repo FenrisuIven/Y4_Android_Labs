@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.example.lb1.ui.screens.HomeScreen
+import com.example.lb1.ui.screens.NotificationsScreen
 import com.example.lb1.ui.theme.Lb1Theme
 
 class MainActivity : ComponentActivity() {
@@ -66,12 +67,7 @@ fun Lb1App() {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             when (currentDestination) {
                 AppDestinations.HOME -> HomeScreen(modifier = Modifier.padding(innerPadding))
-
-                /*AppDestinations.Notifications -> NotificationsScreen(
-                    modifier = Modifier.padding(innerPadding),
-                    onDestinationChange = { newDestination -> currentDestination = newDestination }
-                )*/
-                AppDestinations.Notifications -> TODO()
+                AppDestinations.Notifications -> NotificationsScreen(modifier = Modifier.padding(innerPadding))
 
                 AppDestinations.MORE -> TODO()
             }
