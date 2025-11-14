@@ -62,7 +62,6 @@ fun NotificationsScreen(
       itemsIndexed(notificationsList.value!!) { index: Int, listItem: Notification ->
         NotificationsCard(
           notification = listItem,
-          idx = index,
           removeAction = { viewModel.removeNotification(index) }
         )
       }
@@ -73,7 +72,6 @@ fun NotificationsScreen(
 @Composable
 fun NotificationsCard(
   notification: Notification,
-  idx: Int,
   removeAction: () -> Unit
 ) {
   Row(
