@@ -29,7 +29,7 @@ class NotificationsScreenVM(): ViewModel() {
     return notificationsList;
   }
 
-  fun removeNotification(idx: Int) {
+  fun removeNotification(idx: Int?) {
     if (idx == null) return
 
     _notificationsList.postValue(

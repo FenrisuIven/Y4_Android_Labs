@@ -10,8 +10,8 @@ data class HomeUiState (
 )
 
 class HomeScreenVM() : ViewModel() {
-    private val _uiState = MutableLiveData<HomeUiState>(HomeUiState())
-    public val uiState: LiveData<HomeUiState> = _uiState;
+    private val _uiState = MutableLiveData(HomeUiState())
+    val uiState: LiveData<HomeUiState> = _uiState;
 
     fun changeState(minValue: Int = 0, maxValue: Int = 2) {
         var newIdx = _uiState.value?.labelIdxValue;
