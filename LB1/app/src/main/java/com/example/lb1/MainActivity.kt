@@ -7,12 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,9 +21,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.example.lb1.ui.screens.HomeScreen
+import com.example.lb1.ui.screens.MoreScreen
 import com.example.lb1.ui.screens.NotificationsScreen
 import com.example.lb1.ui.theme.Lb1Theme
 
@@ -68,8 +65,7 @@ fun Lb1App() {
             when (currentDestination) {
                 AppDestinations.HOME -> HomeScreen(modifier = Modifier.padding(innerPadding))
                 AppDestinations.Notifications -> NotificationsScreen(modifier = Modifier.padding(innerPadding))
-
-                AppDestinations.MORE -> TODO()
+                AppDestinations.MORE -> MoreScreen(modifier = Modifier.padding(innerPadding))
             }
         }
     }
