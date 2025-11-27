@@ -48,8 +48,8 @@ class NotificationsScreenVM(): ViewModel() {
     if (id == null) return
 
     _notificationsList.postValue(
-      _notificationsList.value?.filterIndexed{index, _ ->
-        index != id
+      _notificationsList.value?.filter{item ->
+        item.id != id
       }
     )
   }
