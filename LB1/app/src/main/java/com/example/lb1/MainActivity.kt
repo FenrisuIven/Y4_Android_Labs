@@ -4,12 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +40,10 @@ import com.example.lb1.ui.screens.MoreScreen
 import com.example.lb1.ui.screens.notifications.NotificationDetailsScreen
 import com.example.lb1.ui.screens.notifications.NotificationsScreen
 import com.example.lb1.ui.theme.Lb1Theme
+import com.example.lb1.viewmodels.NotificationsScreenVM
+import androidx.compose.ui.graphics.Color
+
+val notificationsScreenVM = NotificationsScreenVM()
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,12 +57,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @PreviewScreenSizes
 @Composable
 fun Lb1App() {
     var currentDestinationPath by rememberSaveable { mutableStateOf(Home.path) }
 
     val navController = rememberNavController()
+
 
     NavigationSuiteScaffold(
         navigationSuiteItems = {
@@ -72,23 +86,34 @@ fun Lb1App() {
             }
         }
     ) {
-        NavHost(navController = navController, startDestination = Home.path ) {
-            composable(Home.path) {
-              HomeScreen(modifier = Modifier)
-            }
-            navigation(startDestination = NotificationScreen.startDestination, route = "notifs") {
-              composable(NotificationScreen.path) {
-                NotificationsScreen(modifier = Modifier)
-              }
-              composable(NotificationScreen.NotificationDetailsScreen.path) {
-                NotificationDetailsScreen()
-              }
-            }
-            composable(More.path) {
-              MoreScreen(modifier = Modifier)
-            }
-        }
+      Scaffold(
 
+      ) { innerPadding ->
+        NavHost(navController = navController, startDestination = Home.path ) {
+          composable(Home.path) {
+            HomeScreen(modifier = Modifier.padding(innerPadding))
+          }
+          navigation(startDestination = NotificationScreen.startDestination, route = "notifs") {
+            composable(NotificationScreen.path) {
+              NotificationsScreen(
+                modifier = Modifier.padding(innerPadding),
+                viewModel = notificationsScreenVM,
+                navController = navController
+              )
+            }
+            composable(NotificationScreen.NotificationDetailsScreen.path) {
+              NotificationDetailsScreen(
+                modifier = Modifier.padding(innerPadding),
+                viewModel = notificationsScreenVM,
+                navController = navController
+              )
+            }
+          }
+          composable(More.path) {
+            MoreScreen(modifier = Modifier.padding(innerPadding))
+          }
+        }
+      }
         /*Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             when (currentDestination) {
                 AppDestinations.HOME -> HomeScreen(modifier = Modifier.padding(innerPadding))

@@ -20,7 +20,7 @@ object NotificationScreen: NavigationRoute {
 
   object NotificationDetailsScreen: NavigationRoute {
     override val startDestination: String = "notifications"
-    override val path: String = "details"
+    override val path: String = "details?notifId={notifId}"
     override val icon: ImageVector = Icons.Default.Notifications
   }
 }

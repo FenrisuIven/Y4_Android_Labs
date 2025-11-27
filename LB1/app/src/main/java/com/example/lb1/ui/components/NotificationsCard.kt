@@ -24,10 +24,13 @@ import com.example.lb1.model.Notification
 @Composable
 fun NotificationsCard(
   notification: Notification,
-  removeAction: () -> Unit
+  removeAction: () -> Unit,
+  clickAction: () -> Unit
 ) {
   Row(
-    modifier = Modifier.padding(8.dp, 0.dp),
+    modifier = Modifier
+      .padding(8.dp, 0.dp)
+      .clickable(onClick = { clickAction() }),
   ){
     Box(
       modifier = Modifier
@@ -54,9 +57,7 @@ fun NotificationsCard(
           modifier = Modifier
             .width(24.dp)
             .height(24.dp)
-            .clickable(
-              onClick = { removeAction() }
-            )
+            .clickable(onClick = { removeAction() })
         ) {
           Icon(
             imageVector = Icons.Default.Close,
@@ -73,7 +74,7 @@ fun NotificationsCard(
           .padding(8.dp, 0.dp)
       ) {
         Text(
-          text = notification.description
+          text = notification.shortDescription
         )
       }
     }

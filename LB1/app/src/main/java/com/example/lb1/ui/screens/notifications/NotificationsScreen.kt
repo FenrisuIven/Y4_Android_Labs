@@ -14,6 +14,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.lb1.model.Notification
 import com.example.lb1.ui.components.NotificationsCard
 import com.example.lb1.viewmodels.NotificationsScreenVM
@@ -21,7 +22,8 @@ import com.example.lb1.viewmodels.NotificationsScreenVM
 @Composable
 fun NotificationsScreen(
   modifier: Modifier,
-  viewModel: NotificationsScreenVM = viewModel()
+  viewModel: NotificationsScreenVM = viewModel(),
+  navController: NavController
 ) {
   val notificationsList = viewModel.notificationsList.observeAsState()
 
@@ -44,10 +46,11 @@ fun NotificationsScreen(
         .weight(1f)
         .padding(0.dp, 8.dp)
     ) {
-      itemsIndexed(notificationsList.value!!) { index: Int, listItem: Notification ->
+      itemsIndexed(notificationsList.value!!) { _: Int, listItem: Notification ->
         NotificationsCard(
           notification = listItem,
-          removeAction = { viewModel.removeNotification(index) }
+          removeAction = { viewModel.removeNotification(listItem.id) },
+          clickAction = { navController.navigate("details?notifId=${listItem.id}") }
         )
       }
     }
