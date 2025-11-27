@@ -1,19 +1,19 @@
-package com.example.lb1.ui.screens
+package com.example.lb1.ui.screens.notifications
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.material3.Text
-import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
 import com.example.lb1.model.Notification
 import com.example.lb1.ui.components.NotificationsCard
 import com.example.lb1.viewmodels.NotificationsScreenVM
