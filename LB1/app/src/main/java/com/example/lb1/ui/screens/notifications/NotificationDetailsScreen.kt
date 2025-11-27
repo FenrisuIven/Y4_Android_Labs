@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -21,18 +22,10 @@ import com.example.lb1.viewmodels.NotificationsScreenVM
 @Composable()
 fun NotificationDetailsScreen(
   modifier: Modifier,
-  viewModel: NotificationsScreenVM = viewModel(),
-  navController: NavController
+  notificationId: Int,
+  viewModel: NotificationsScreenVM = viewModel()
 ) {
-  val notificationId = navController
-    .getBackStackEntry("details?notifId={notifId}")
-    .arguments?.getString("notifId")
-
-  if (notificationId == null || notificationId == "") {
-    Log.e("NotifID NULL", "Notification ID was either not set, or cannot be accessed")
-  }
-
-  val targetNotif = viewModel.getById(notificationId!!.toInt());
+  val targetNotif = viewModel.getById(notificationId);
 
   Column(
     modifier = modifier
@@ -54,8 +47,15 @@ fun NotificationDetailsScreen(
 
     Column(
       modifier = Modifier
+        .fillMaxHeight()
+        .padding(0.dp, 8.dp)
+        .background(Color.LightGray)
     ) {
-
+      Text(
+        text = targetNotif.fullDescription,
+        modifier = Modifier
+          .padding(8.dp)
+      )
     }
   }
 }

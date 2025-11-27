@@ -170,11 +170,13 @@ fun Lb1App() {
                   defaultValue = "Notif Details Screen"
                 }
               )
-            ) {
+            ) { navBackStackEntry ->
+              val notifId = navBackStackEntry.arguments?.getString("notifId")
+
               NotificationDetailsScreen(
                 modifier = Modifier.padding(innerPadding),
-                viewModel = notificationsScreenVM,
-                navController = navController
+                notificationId = notifId!!.toInt(),
+                viewModel = notificationsScreenVM
               )
             }
           }
