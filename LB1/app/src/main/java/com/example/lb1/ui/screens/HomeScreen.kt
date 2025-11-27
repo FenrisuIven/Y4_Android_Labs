@@ -23,7 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun HomeScreen(
     modifier: Modifier,
-    homeScreenVM: HomeScreenVM = viewModel()
+    viewModel: HomeScreenVM = viewModel()
 ) {
     val firstBtnLabel = "remember"
     val secondBtnLabel = "viewModel"
@@ -35,7 +35,7 @@ fun HomeScreen(
 
     var firstButtonTextIdx by remember { mutableStateOf(0) }
     var thirdButtonTextIdx by rememberSaveable { mutableStateOf(0) }
-    val homeUiState by homeScreenVM.uiState.observeAsState()
+    val homeUiState by viewModel.uiState.observeAsState()
 
 
     fun onClickFirstButton () {
@@ -77,7 +77,7 @@ fun HomeScreen(
             Column(modifier = Modifier.weight(1f)) {
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { homeScreenVM.changeState(0, secondButtonLabels.size) }
+                    onClick = { viewModel.changeState(0, secondButtonLabels.size) }
                 ) {
                     Text(text = secondBtnLabel)
                 }

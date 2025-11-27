@@ -43,8 +43,10 @@ import com.example.lb1.viewmodels.NotificationsScreenVM
 import androidx.navigation.NavType
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
+import com.example.lb1.viewmodels.HomeScreenVM
 
 val notificationsScreenVM = NotificationsScreenVM()
+val homeScreenVM = HomeScreenVM()
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,7 +143,10 @@ fun Lb1App() {
               }
             )
           ) {
-            HomeScreen(modifier = Modifier.padding(innerPadding))
+            HomeScreen(
+              modifier = Modifier.padding(innerPadding),
+              viewModel = homeScreenVM
+            )
           }
           navigation(
             startDestination = NotificationScreen.startDestination,
