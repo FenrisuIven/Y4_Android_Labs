@@ -43,13 +43,8 @@ fun MoreScreen(
   }
 
   Column(
-    modifier = modifier.padding(0.dp, 16.dp)
+    modifier = modifier
   ) {
-    Text(
-      text = "More Screen",
-      modifier = Modifier.align(Alignment.CenterHorizontally)
-    )
-
     Row(
       modifier = Modifier.padding(16.dp, 8.dp),
       horizontalArrangement = Arrangement.spacedBy(16.dp)

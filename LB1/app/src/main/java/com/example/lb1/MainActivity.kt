@@ -1,14 +1,13 @@
 package com.example.lb1
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Notifications
@@ -41,7 +40,9 @@ import com.example.lb1.ui.screens.notifications.NotificationDetailsScreen
 import com.example.lb1.ui.screens.notifications.NotificationsScreen
 import com.example.lb1.ui.theme.Lb1Theme
 import com.example.lb1.viewmodels.NotificationsScreenVM
-import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavType
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
 
 val notificationsScreenVM = NotificationsScreenVM()
 
@@ -86,22 +87,90 @@ fun Lb1App() {
             }
         }
     ) {
-      Scaffold(
+      val navBackStackEntry by navController.currentBackStackEntryAsState()
+      val currentEntryLabel = navBackStackEntry?.arguments?.getString("label")
 
+      val canNavigateUp = navController.previousBackStackEntry != null
+
+      val currentDestination = navBackStackEntry?.destination
+      var isNestedChild = false
+
+      if (currentDestination != null) {
+        val parent = currentDestination.parent
+
+        // It is now safe to access .graph because a destination exists
+        val rootGraph = navController.graph
+
+        if (parent != rootGraph) {
+          isNestedChild = parent?.startDestinationId != currentDestination.id
+        }
+      }
+
+      Log.d("CURRENT", "$isNestedChild, $canNavigateUp")
+
+      Scaffold(
+        topBar = {
+          TopAppBar(
+            title = {
+              Text(
+                text = "$currentEntryLabel",
+              )
+            },
+            navigationIcon = {
+              if (canNavigateUp && isNestedChild) {
+                IconButton(
+                  onClick = { navController.navigateUp() }
+                ) {
+                  Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back"
+                  )
+                }
+              }
+            },
+          )
+        }
       ) { innerPadding ->
         NavHost(navController = navController, startDestination = Home.path ) {
-          composable(Home.path) {
+          composable(
+            route = Home.path,
+            arguments = listOf(
+              navArgument("label") {
+                type = NavType.StringType
+                defaultValue = "Home Screen"
+              }
+            )
+          ) {
             HomeScreen(modifier = Modifier.padding(innerPadding))
           }
-          navigation(startDestination = NotificationScreen.startDestination, route = "notifs") {
-            composable(NotificationScreen.path) {
+          navigation(
+            startDestination = NotificationScreen.startDestination,
+            route = "notifs"
+          ) {
+            composable(
+              route = NotificationScreen.path,
+              arguments = listOf(
+                navArgument("label") {
+                  type = NavType.StringType
+                  defaultValue = "Notifications Screen"
+                }
+              )
+            ) {
               NotificationsScreen(
                 modifier = Modifier.padding(innerPadding),
                 viewModel = notificationsScreenVM,
                 navController = navController
               )
             }
-            composable(NotificationScreen.NotificationDetailsScreen.path) {
+            composable(
+              route = NotificationScreen.NotificationDetailsScreen.path,
+              arguments = listOf(
+                navArgument("label") {
+                  type = NavType.StringType
+                  defaultValue = "Notif Details Screen"
+                }
+              )
+            ) {
               NotificationDetailsScreen(
                 modifier = Modifier.padding(innerPadding),
                 viewModel = notificationsScreenVM,
@@ -109,7 +178,15 @@ fun Lb1App() {
               )
             }
           }
-          composable(More.path) {
+          composable(
+            route = More.path,
+            arguments = listOf(
+              navArgument("label") {
+                type = NavType.StringType
+                defaultValue = "More Screen"
+              }
+            )
+          ) {
             MoreScreen(modifier = Modifier.padding(innerPadding))
           }
         }

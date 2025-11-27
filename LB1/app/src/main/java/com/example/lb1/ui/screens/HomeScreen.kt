@@ -55,13 +55,8 @@ fun HomeScreen(
     }
 
     Column (
-        modifier = modifier.padding(0.dp, 16.dp)
+        modifier = modifier
     ) {
-        Text(
-            text = "Home Screen",
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
-
         Row(
             modifier = Modifier.padding(16.dp, 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
