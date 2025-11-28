@@ -19,39 +19,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.lb1.viewmodels.HomeScreenVM
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.lb1.model.LabeledButton
 
 @Composable
 fun HomeScreen(
     modifier: Modifier,
     viewModel: HomeScreenVM = viewModel()
 ) {
-    val firstBtnLabel = "remember"
-    val secondBtnLabel = "viewModel"
-    val thirdBtnLabel = "saveable"
+    val firstButton = LabeledButton(
+      label = "remember",
+      descriptors = arrayOf("first", "second", "third", "last")
+    )
 
-    val firstButtonLabels = arrayOf("first", "second", "third", "last")
-    val secondButtonLabels = arrayOf("1st", "2nd", "3rd", "4th", "5th", "Nth")
-    val thirdButtonLabels = arrayOf("1", "2", "3", "4", "5", "N")
+    val secondButton = LabeledButton(
+      label = "viewModel",
+      descriptors = arrayOf("1st", "2nd", "3rd", "4th", "5th", "Nth")
+    )
 
-    var firstButtonTextIdx by remember { mutableStateOf(0) }
-    var thirdButtonTextIdx by rememberSaveable { mutableStateOf(0) }
+    val thirdButton = LabeledButton(
+      label = "saveable",
+      descriptors = arrayOf("1", "2", "3", "4", "5", "N")
+    )
+
+    var firstIdx by remember { mutableStateOf(0) }
+    var thirdIdx by rememberSaveable { mutableStateOf(0) }
     val homeUiState by viewModel.uiState.observeAsState()
 
 
     fun onClickFirstButton () {
-        if (firstButtonTextIdx + 1 > firstButtonLabels.size - 1) {
-            firstButtonTextIdx = 0;
-        } else {
-            firstButtonTextIdx += 1
-        }
+        firstIdx = firstButton.incDescriptorIdx(firstIdx)
     }
 
     fun onClickThirdButton () {
-        if (thirdButtonTextIdx + 1 > thirdButtonLabels.size - 1) {
-            thirdButtonTextIdx = 0;
-        } else {
-            thirdButtonTextIdx += 1
-        }
+        thirdIdx = thirdButton.incDescriptorIdx(thirdIdx)
     }
 
     Column (
@@ -66,10 +66,10 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = { onClickFirstButton() }
                 ) {
-                    Text(text = firstBtnLabel)
+                    Text(text = firstButton.label)
                 }
                 Text(
-                    text = firstButtonLabels[firstButtonTextIdx],
+                    text = firstButton.descriptors[firstIdx],
                     modifier = Modifier.weight(1f).align(Alignment.CenterHorizontally)
                 )
             }
@@ -77,12 +77,12 @@ fun HomeScreen(
             Column(modifier = Modifier.weight(1f)) {
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { viewModel.changeState(0, secondButtonLabels.size) }
+                    onClick = { viewModel.changeState(0, secondButton.descriptorsCount) }
                 ) {
-                    Text(text = secondBtnLabel)
+                    Text(text = secondButton.label)
                 }
                 Text(
-                    text = secondButtonLabels[homeUiState?.labelIdxValue!!],
+                    text = secondButton.getByIdx(homeUiState?.labelIdxValue),
                     modifier = Modifier.weight(1f).align(Alignment.CenterHorizontally)
                 )
             }
@@ -92,10 +92,10 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = { onClickThirdButton() }
                 ) {
-                    Text(text = thirdBtnLabel)
+                    Text(text = thirdButton.label)
                 }
                 Text(
-                    text = thirdButtonLabels[thirdButtonTextIdx],
+                    text = thirdButton.descriptors[thirdIdx],
                     modifier = Modifier.weight(1f).align(Alignment.CenterHorizontally)
                 )
             }
