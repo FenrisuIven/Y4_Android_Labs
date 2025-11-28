@@ -11,20 +11,20 @@ class NotificationsScreenVM(): ViewModel() {
 
   private fun init() {
     val titles = arrayOf(
-      "System Maintenance",
       "New Message",
+      "System Maintenance",
     );
     val shortDescriptions = arrayOf(
-      "Scheduled maintenance will occur tonight at 2:00 AM.",
       "You have received a new text message.",
+      "Scheduled maintenance will occur tonight at 2:00 AM.",
     );
     val longDescriptions = arrayOf(
-      "Scheduled maintenance will occur tonight at 2:00 AM. The service will become unavailable for a short period from 2:00AM to 6:00AM of the next day.",
       "You have received a new text message from <username> on <date>.\n\"Hello <username>, We've been trying to reach you concerning your vehicle's extended warranty. ...\"",
+      "Scheduled maintenance will occur tonight at 2:00 AM. The service will become unavailable for a short period from 2:00AM to 6:00AM of the next day.",
     );
 
     var notifications = listOf<Notification>();
-    for (i in 1..10) {
+    for (i in 0..9) {
       notifications = notifications.plus(Notification (
         id = i,
         title = titles[i % titles.size],
