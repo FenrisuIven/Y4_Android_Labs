@@ -39,13 +39,11 @@ import com.example.lb1.ui.screens.MoreScreen
 import com.example.lb1.ui.screens.notifications.NotificationDetailsScreen
 import com.example.lb1.ui.screens.notifications.NotificationsScreen
 import com.example.lb1.ui.theme.Lb1Theme
-import com.example.lb1.viewmodels.NotificationsScreenVM
 import androidx.navigation.NavType
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.example.lb1.viewmodels.HomeScreenVM
 
-val notificationsScreenVM = NotificationsScreenVM()
 val homeScreenVM = HomeScreenVM()
 
 class MainActivity : ComponentActivity() {
@@ -79,7 +77,11 @@ fun Lb1App() {
                             contentDescription = appDestination.path
                         )
                     },
-                    label = { Text(appDestination.path) },
+                    label = { Text(
+                      appDestination.path.replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase() else it.toString()
+                      })
+                    },
                     selected = appDestination.path == currentDestinationPath,
                     onClick = {
                       currentDestinationPath = appDestination.path
@@ -100,7 +102,6 @@ fun Lb1App() {
       if (currentDestination != null) {
         val parent = currentDestination.parent
 
-        // It is now safe to access .graph because a destination exists
         val rootGraph = navController.graph
 
         if (parent != rootGraph) {
@@ -150,7 +151,7 @@ fun Lb1App() {
           }
           navigation(
             startDestination = NotificationScreen.startDestination,
-            route = "notifs"
+            route = "."
           ) {
             composable(
               route = NotificationScreen.path,
@@ -163,7 +164,6 @@ fun Lb1App() {
             ) {
               NotificationsScreen(
                 modifier = Modifier.padding(innerPadding),
-                viewModel = notificationsScreenVM,
                 navController = navController
               )
             }
@@ -180,8 +180,7 @@ fun Lb1App() {
 
               NotificationDetailsScreen(
                 modifier = Modifier.padding(innerPadding),
-                notificationId = notifId!!.toInt(),
-                viewModel = notificationsScreenVM
+                notificationId = notifId!!.toInt()
               )
             }
           }

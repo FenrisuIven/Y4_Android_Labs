@@ -19,11 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.lb1.model.Notification
+import com.example.lb1.repositories.notifications.dto.NotificationDto
 
 @Composable
 fun NotificationsCard(
-  notification: Notification,
+  notification: NotificationDto,
   removeAction: () -> Unit,
   clickAction: () -> Unit
 ) {

@@ -13,17 +13,20 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.lb1.model.Notification
+import com.example.lb1.repositories.notifications.dto.NotificationDto
 import com.example.lb1.ui.components.NotificationsCard
 import com.example.lb1.viewmodels.NotificationsScreenVM
+import kotlinx.coroutines.launch
 
 @Composable
 fun NotificationsScreen(
@@ -33,9 +36,13 @@ fun NotificationsScreen(
 ) {
   val notificationsList = viewModel.notificationsList.observeAsState()
 
-  SideEffect {
+  val scope = rememberCoroutineScope()
+
+  LaunchedEffect(key1 = "home") {
+    viewModel.loadFromDB();
     viewModel.getAllNotifications()
   }
+
   Column(
     modifier = modifier.fillMaxWidth(),
   ) {
@@ -45,20 +52,24 @@ fun NotificationsScreen(
         .weight(1f)
         .padding(0.dp, 8.dp)
     ) {
-      itemsIndexed(notificationsList.value!!) { _: Int, listItem: Notification ->
+      itemsIndexed(notificationsList.value!!) { _: Int, listItem: NotificationDto ->
         NotificationsCard(
           notification = listItem,
-          removeAction = { viewModel.removeNotification(listItem.id) },
+          removeAction = {
+            scope.launch {
+              viewModel.removeNotification(listItem.id)
+            }
+          },
           clickAction = { navController.navigate("details?notifId=${listItem.id}") }
         )
       }
     }
-    LazyRow(
+      LazyRow(
       horizontalArrangement = Arrangement.spacedBy(8.dp),
       modifier = Modifier
         .padding(8.dp, 0.dp)
     ) {
-      itemsIndexed(notificationsList.value!!) { _: Int, listItem: Notification ->
+      itemsIndexed(notificationsList.value!!) { _: Int, listItem: NotificationDto ->
         Box(
           modifier = Modifier
             .background(Color.LightGray)

@@ -1,6 +1,5 @@
 package com.example.lb1.ui.screens.notifications
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,13 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import com.example.lb1.repositories.notifications.dto.NotificationDto
 import com.example.lb1.viewmodels.NotificationsScreenVM
 
 @Composable()
@@ -25,7 +25,10 @@ fun NotificationDetailsScreen(
   notificationId: Int,
   viewModel: NotificationsScreenVM = viewModel()
 ) {
-  val targetNotif = viewModel.getById(notificationId);
+  var target: NotificationDto? = null
+  LaunchedEffect(key1 = notificationId) {
+    target = viewModel.getById(notificationId)
+  }
 
   Column(
     modifier = modifier
@@ -39,7 +42,7 @@ fun NotificationDetailsScreen(
       horizontalArrangement = Arrangement.Center
     ) {
       Text(
-        text = targetNotif.title,
+        text = target?.title!!,
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp
       )
@@ -52,7 +55,7 @@ fun NotificationDetailsScreen(
         .background(Color.LightGray)
     ) {
       Text(
-        text = targetNotif.fullDescription,
+        text = target?.fullDescription!!,
         modifier = Modifier
           .padding(8.dp)
       )
