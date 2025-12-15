@@ -22,7 +22,7 @@ class RecipeRepository(private val appDao: AppDao) : RecipeBase {
   }
 
   override suspend fun getOne(payload: FindOneRecipePayload): RecipeDto {
-    val target = if (payload.name !== null) {
+    val target = if (payload.name !== "") {
       appDao.findOneRecipe(name = payload.name!!)
     } else {
       appDao.getOneRecipe(payload.id)

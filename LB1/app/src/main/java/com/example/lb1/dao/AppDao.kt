@@ -45,23 +45,23 @@ interface AppDao {
   suspend fun findOneCategory(name: String): CategoryEntity
 
   @Insert(onConflict = OnConflictStrategy.ABORT)
-  suspend fun createCategory(ingredient: CategoryEntity)
+  suspend fun createCategory(category: CategoryEntity)
 
   @Update(onConflict = OnConflictStrategy.ABORT)
-  suspend fun updateCategory(ingredient: CategoryEntity)
+  suspend fun updateCategory(category: CategoryEntity)
 
   @Delete
-  suspend fun deleteCategory(ingredient: CategoryEntity)
+  suspend fun deleteCategory(category: CategoryEntity)
 
   //=------------------------------------------------------------=
   //=----                  RECIPES                           ----=
-  @Query("SELECT * FROM categories")
+  @Query("SELECT * FROM recipes")
   suspend fun getAllRecipes(): List<RecipeEntity>
 
-  @Query("SELECT * FROM categories WHERE id = :id")
+  @Query("SELECT * FROM recipes WHERE id = :id")
   suspend fun getOneRecipe(id: Int): RecipeEntity
 
-  @Query("SELECT * FROM categories WHERE name = :name")
+  @Query("SELECT * FROM recipes WHERE name = :name")
   suspend fun findOneRecipe(name: String): RecipeEntity
 
   @Insert(onConflict = OnConflictStrategy.ABORT)

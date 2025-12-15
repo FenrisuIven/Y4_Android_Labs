@@ -25,6 +25,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -32,12 +33,12 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.lb1.ui.routes.Home
 import com.example.lb1.ui.routes.More
-import com.example.lb1.ui.routes.NotificationScreen
+import com.example.lb1.ui.routes.RecipesScreen
 import com.example.lb1.ui.routes.routes
 import com.example.lb1.ui.screens.HomeScreen
 import com.example.lb1.ui.screens.MoreScreen
-import com.example.lb1.ui.screens.notifications.NotificationDetailsScreen
-import com.example.lb1.ui.screens.notifications.NotificationsScreen
+import com.example.lb1.ui.screens.recipes.RecipeDetailsScreen
+import com.example.lb1.ui.screens.recipes.RecipesScreen
 import com.example.lb1.ui.theme.Lb1Theme
 import androidx.navigation.NavType
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -66,16 +67,23 @@ fun Lb1App() {
 
     val navController = rememberNavController()
 
-
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             routes.forEach { appDestination ->
                 item(
                     icon = {
-                        Icon(
-                            appDestination.icon,
-                            contentDescription = appDestination.path
+                      if (appDestination.icon !== null) {
+                        return@item Icon(
+                          appDestination.icon!!,
+                          contentDescription = appDestination.path
                         )
+                      }
+                      else if (appDestination.iconId !== null) {
+                        return@item Icon(
+                          imageVector = ImageVector.vectorResource(appDestination.iconId!!),
+                          contentDescription = appDestination.path
+                        )
+                      }
                     },
                     label = { Text(
                       appDestination.path.replaceFirstChar {
@@ -150,37 +158,37 @@ fun Lb1App() {
             )
           }
           navigation(
-            startDestination = NotificationScreen.startDestination,
+            startDestination = RecipesScreen.startDestination,
             route = "."
           ) {
             composable(
-              route = NotificationScreen.path,
+              route = RecipesScreen.path,
               arguments = listOf(
                 navArgument("label") {
                   type = NavType.StringType
-                  defaultValue = "Notifications Screen"
+                  defaultValue = "Recipes Screen"
                 }
               )
             ) {
-              NotificationsScreen(
+              RecipesScreen(
                 modifier = Modifier.padding(innerPadding),
                 navController = navController
               )
             }
             composable(
-              route = NotificationScreen.NotificationDetailsScreen.path,
+              route = RecipesScreen.NotificationDetailsScreen.path,
               arguments = listOf(
                 navArgument("label") {
                   type = NavType.StringType
-                  defaultValue = "Notif Details Screen"
+                  defaultValue = "Recipe Details Screen"
                 }
               )
             ) { navBackStackEntry ->
-              val notifId = navBackStackEntry.arguments?.getString("notifId")
+              val recipeId = navBackStackEntry.arguments?.getString("recipeId")
 
-              NotificationDetailsScreen(
+              RecipeDetailsScreen(
                 modifier = Modifier.padding(innerPadding),
-                notificationId = notifId!!.toInt()
+                notificationId = recipeId!!.toInt()
               )
             }
           }

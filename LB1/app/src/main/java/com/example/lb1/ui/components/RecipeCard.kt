@@ -19,11 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.lb1.repositories.notifications.dto.NotificationDto
+import com.example.lb1.repositories.category.dto.CategoryDto
+import com.example.lb1.repositories.recipe.dto.RecipeDto
 
 @Composable
-fun NotificationsCard(
-  notification: NotificationDto,
+fun RecipeCard(
+  recipe: RecipeDto,
+  category: CategoryDto,
   removeAction: () -> Unit,
   clickAction: () -> Unit
 ) {
@@ -49,7 +51,7 @@ fun NotificationsCard(
           .padding(8.dp, 0.dp),
       ) {
         Text(
-          text = notification.title,
+          text = recipe.name,
           fontWeight = FontWeight.Medium,
           modifier = Modifier.weight(1f)
         )
@@ -74,7 +76,7 @@ fun NotificationsCard(
           .padding(8.dp, 0.dp)
       ) {
         Text(
-          text = notification.shortDescription
+          text = category.name
         )
       }
     }

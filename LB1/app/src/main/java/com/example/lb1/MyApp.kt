@@ -10,5 +10,5 @@ class MyApp: Application() {
   private val appDb by lazy { AppDb.getDB(this) }
   val recipesRepo by lazy { RecipeRepository(appDb.appDao()) }
   val ingredientsRepo by lazy { IngredientRepository(appDb.appDao()) }
-  val categoriesRepos by lazy { CategoryRepository(appDb.appDao()) }
+  val categoriesRepo by lazy { CategoryRepository(appDb.appDao()) }
 }

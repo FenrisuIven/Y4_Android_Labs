@@ -7,6 +7,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 interface NavigationRoute {
   val startDestination: String
   val path: String
-  val icon: ImageVector
-
+  val icon: ImageVector?
+  val iconId: Int?
 }

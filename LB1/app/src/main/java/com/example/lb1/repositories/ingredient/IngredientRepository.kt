@@ -16,7 +16,7 @@ class IngredientRepository(private val appDao: AppDao) : IngredientBase {
   }
 
   override suspend fun getOne(payload: FindOneIngredientPayload): IngredientDto {
-    val target = if (payload.name !== null) {
+    val target = if (payload.name !== "") {
       appDao.findOneIngredient(name = payload.name!!)
     } else {
       appDao.getOneIngredient(payload.id)
