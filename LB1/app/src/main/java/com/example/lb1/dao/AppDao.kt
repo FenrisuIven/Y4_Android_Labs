@@ -9,26 +9,10 @@ import androidx.room.Update
 import com.example.lb1.entity.CategoryEntity
 import com.example.lb1.entity.IngredientEntity
 import com.example.lb1.entity.NotificationEntity
+import com.example.lb1.entity.RecipeEntity
 
 @Dao
 interface AppDao {
-  //=------------------------------------------------------------=
-  //=----                  NOTIFICATIONS                     ----=
-  @Query("SELECT * FROM notifications")
-  suspend fun getAllNotifs(): List<NotificationEntity>
-
-  @Query("SELECT * FROM notifications WHERE id = :id")
-  suspend fun getOneNotif(id: Int): NotificationEntity
-
-  @Insert(onConflict = OnConflictStrategy.ABORT)
-  suspend fun createNotif(notif: NotificationEntity)
-
-  @Delete
-  suspend fun deleteNotif(notif: NotificationEntity)
-
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertAllNotifs(notifs: List<NotificationEntity>)
-
   //=------------------------------------------------------------=
   //=----                  INGREDIENTS                       ----=
   @Query("SELECT * FROM ingredients")
@@ -68,4 +52,24 @@ interface AppDao {
 
   @Delete
   suspend fun deleteCategory(ingredient: CategoryEntity)
+
+  //=------------------------------------------------------------=
+  //=----                  RECIPES                           ----=
+  @Query("SELECT * FROM categories")
+  suspend fun getAllRecipes(): List<RecipeEntity>
+
+  @Query("SELECT * FROM categories WHERE id = :id")
+  suspend fun getOneRecipe(id: Int): RecipeEntity
+
+  @Query("SELECT * FROM categories WHERE name = :name")
+  suspend fun findOneRecipe(name: String): RecipeEntity
+
+  @Insert(onConflict = OnConflictStrategy.ABORT)
+  suspend fun createRecipe(recipe: RecipeEntity)
+
+  @Update(onConflict = OnConflictStrategy.ABORT)
+  suspend fun updateRecipe(recipe: RecipeEntity)
+
+  @Delete
+  suspend fun deleteRecipe(recipe: RecipeEntity)
 }

@@ -2,9 +2,13 @@ package com.example.lb1
 
 import android.app.Application
 import com.example.lb1.db.AppDb
-import com.example.lb1.repositories.notifications.NotificationsBaseRepository
+import com.example.lb1.repositories.category.CategoryRepository
+import com.example.lb1.repositories.ingredient.IngredientRepository
+import com.example.lb1.repositories.recipe.RecipeRepository
 
 class MyApp: Application() {
   private val appDb by lazy { AppDb.getDB(this) }
-  val notifRepo by lazy { NotificationsBaseRepository(appDb.appDao()) }
+  val recipesRepo by lazy { RecipeRepository(appDb.appDao()) }
+  val ingredientsRepo by lazy { IngredientRepository(appDb.appDao()) }
+  val categoriesRepos by lazy { CategoryRepository(appDb.appDao()) }
 }

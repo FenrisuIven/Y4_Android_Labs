@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -25,16 +24,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.lb1.repositories.notifications.dto.NotificationDto
 import com.example.lb1.ui.components.NotificationsCard
-import com.example.lb1.viewmodels.NotificationsScreenVM
+import com.example.lb1.viewmodels.RecipesVM
 import kotlinx.coroutines.launch
 
 @Composable
 fun NotificationsScreen(
   modifier: Modifier,
-  viewModel: NotificationsScreenVM = viewModel(),
+  viewModel: RecipesVM = viewModel(),
   navController: NavController
 ) {
-  val notificationsList = viewModel.notificationsList.observeAsState()
+  val notificationsList = viewModel.recipesList.observeAsState()
 
   val scope = rememberCoroutineScope()
 

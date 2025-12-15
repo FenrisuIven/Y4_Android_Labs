@@ -17,13 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lb1.repositories.notifications.dto.NotificationDto
-import com.example.lb1.viewmodels.NotificationsScreenVM
+import com.example.lb1.viewmodels.RecipesVM
 
 @Composable()
 fun NotificationDetailsScreen(
   modifier: Modifier,
   notificationId: Int,
-  viewModel: NotificationsScreenVM = viewModel()
+  viewModel: RecipesVM = viewModel()
 ) {
   var target: NotificationDto? = null
   LaunchedEffect(key1 = notificationId) {
