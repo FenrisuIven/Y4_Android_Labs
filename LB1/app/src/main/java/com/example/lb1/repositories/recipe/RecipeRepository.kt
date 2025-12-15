@@ -1,50 +1,46 @@
-package com.example.lb1.repositories.category
+package com.example.lb1.repositories.recipe
 
 import com.example.lb1.dao.AppDao
 import com.example.lb1.entity.IngredientEntity
-import com.example.lb1.repositories.category.dto.CategoryDto
-import com.example.lb1.repositories.category.dto.CreateCategoryDto
-import com.example.lb1.repositories.category.dto.UpdateCategoryDto
-import com.example.lb1.repositories.category.types.FindOneCategoryPayload
 import com.example.lb1.repositories.ingredient.dto.CreateIngredientDto
 import com.example.lb1.repositories.ingredient.dto.IngredientDto
 import com.example.lb1.repositories.ingredient.dto.UpdateIngredientDto
 import com.example.lb1.repositories.ingredient.types.FindOneIngredientPayload
 
-class CategoryRepository(private val appDao: AppDao) : CategoryBase {
-  override suspend fun getAll(): List<CategoryDto> {
-    return appDao.getAllIngredients().map { CategoryDto(
+class RecipeRepository(private val appDao: AppDao) : RecipeBase {
+  override suspend fun getAll(): List<IngredientDto> {
+    return appDao.getAllIngredients().map { IngredientDto(
       it.id,
       it.name
     ) }
   }
 
-  override suspend fun getOne(payload: FindOneCategoryPayload): CategoryDto {
+  override suspend fun getOne(payload: FindOneIngredientPayload): IngredientDto {
     val target = if (payload.name !== null) {
       appDao.findOneIngredient(name = payload.name!!)
     } else {
       appDao.getOneIngredient(payload.id)
     }
-    return CategoryDto(
+    return IngredientDto(
       target.id,
       target.name
     )
   }
 
-  override suspend fun create(dto: CreateCategoryDto) {
+  override suspend fun create(dto: CreateIngredientDto) {
     appDao.createIngredient(IngredientEntity(
       0,
       dto.name
     ))
   }
 
-  override suspend fun update(id: Int, dto: UpdateCategoryDto): CategoryDto? {
+  override suspend fun update(id: Int, dto: UpdateIngredientDto): IngredientDto? {
     appDao.updateIngredient(IngredientEntity(
       id,
       dto.name
     ))
     val updated = appDao.getOneIngredient(id)
-    return CategoryDto(
+    return IngredientDto(
       updated.id,
       updated.name
     )
