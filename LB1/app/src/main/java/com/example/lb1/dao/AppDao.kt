@@ -6,9 +6,9 @@ import androidx.room.Insert
 import androidx.room.Delete
 import androidx.room.OnConflictStrategy
 import androidx.room.Update
+import com.example.lb1.entity.CategoryEntity
 import com.example.lb1.entity.IngredientEntity
 import com.example.lb1.entity.NotificationEntity
-import com.example.lb1.repositories.ingredient.types.FindOneIngredientPayload
 
 @Dao
 interface AppDao {
@@ -48,4 +48,24 @@ interface AppDao {
 
   @Delete
   suspend fun deleteIngredient(ingredient: IngredientEntity)
+
+  //=------------------------------------------------------------=
+  //=----                  CATEGORIES                        ----=
+  @Query("SELECT * FROM categories")
+  suspend fun getAllCategories(): List<CategoryEntity>
+
+  @Query("SELECT * FROM categories WHERE id = :id")
+  suspend fun getOneCategory(id: Int): CategoryEntity
+
+  @Query("SELECT * FROM categories WHERE name = :name")
+  suspend fun findOneCategory(name: String): CategoryEntity
+
+  @Insert(onConflict = OnConflictStrategy.ABORT)
+  suspend fun createCategory(ingredient: CategoryEntity)
+
+  @Update(onConflict = OnConflictStrategy.ABORT)
+  suspend fun updateCategory(ingredient: CategoryEntity)
+
+  @Delete
+  suspend fun deleteCategory(ingredient: CategoryEntity)
 }

@@ -7,6 +7,7 @@ import android.content.Context
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.lb1.dao.AppDao
+import com.example.lb1.entity.CategoryEntity
 import com.example.lb1.entity.IngredientEntity
 import com.example.lb1.entity.NotificationEntity
 
@@ -26,7 +27,15 @@ val MIGRATION_1_2 = object: Migration(1,2) {
   }
 }
 
-@Database(entities = [NotificationEntity::class, IngredientEntity::class], version = 2, exportSchema = true)
+@Database(
+  entities = [
+    NotificationEntity::class,
+    IngredientEntity::class,
+    CategoryEntity::class
+  ],
+  version = 3,
+  exportSchema = true
+)
 abstract class AppDb: RoomDatabase() {
   abstract fun appDao(): AppDao
 
