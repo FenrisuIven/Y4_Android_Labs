@@ -4,53 +4,29 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.lb1.dao.AppDao
 import com.example.lb1.entity.CategoryEntity
 import com.example.lb1.entity.IngredientEntity
 import com.example.lb1.entity.NotificationEntity
-
-val MIGRATION_1_2 = object: Migration(1,2) {
-  override fun migrate(db: SupportSQLiteDatabase) {
-    db.execSQL("""
-        CREATE TABLE IF NOT EXISTS ingredients (
-          id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-          name TEXT NOT NULL
-        )
-      """.trimIndent()
-    )
-    db.execSQL("""
-        CREATE UNIQUE INDEX IF NOT EXISTS `index_ingredients_name` ON ingredients (`name`)
-      """.trimIndent()
-    )
-  }
-}
-
-val MIGRATION_2_3 = object: Migration(2,3) {
-  override fun migrate(db: SupportSQLiteDatabase) {
-    db.execSQL("""
-        CREATE TABLE IF NOT EXISTS categories (
-          id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-          name TEXT NOT NULL
-        )
-      """.trimIndent()
-    )
-    db.execSQL("""
-        CREATE UNIQUE INDEX IF NOT EXISTS `index_categories_name` ON categories (`name`)
-      """.trimIndent()
-    )
-  }
-}
+import com.example.lb1.entity.RecipeEntity
 
 @Database(
   entities = [
     NotificationEntity::class,
     IngredientEntity::class,
-    CategoryEntity::class
+    CategoryEntity::class,
+    RecipeEntity::class,
   ],
-  version = 3,
-  exportSchema = true
+  version = 4,
+  exportSchema = true,
+  autoMigrations = [
+    AutoMigration(1,2),
+    AutoMigration(2,3),
+    AutoMigration(3,4),
+  ]
 )
 abstract class AppDb: RoomDatabase() {
   abstract fun appDao(): AppDao
@@ -66,8 +42,9 @@ abstract class AppDb: RoomDatabase() {
           AppDb::class.java,
           "app_database.db1"
         )
-          .addMigrations(MIGRATION_1_2)
-          .addMigrations(MIGRATION_2_3)
+//          .addMigrations(MIGRATION_1_2)
+//          .addMigrations(MIGRATION_2_3)
+//          .addMigrations(MIGRATION_3_4)
           .build()
         INSTANCE = instance
         instance
