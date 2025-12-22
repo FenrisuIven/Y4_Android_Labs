@@ -1,20 +1,28 @@
 package com.example.lb1.ui.screens.recipes
 
-import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.lb1.repositories.category.dto.CategoryDto
 import com.example.lb1.repositories.recipe.dto.RecipeDto
 import com.example.lb1.ui.components.RecipeCard
 import com.example.lb1.viewmodels.ViewRecipesVM
@@ -49,9 +57,7 @@ fun RecipesScreen(
           recipe = recipe,
           category = runBlocking {
             recipesVM.getCategoryById(recipe.categoryId);
-//            CategoryDto(0, "Placeholder")
           },
-//          category = CategoryDto(0, "Placeholder"),
           removeAction = {
             scope.launch {
               recipesVM.removeRecipe(recipe.id)
@@ -62,24 +68,22 @@ fun RecipesScreen(
         )
       }
     }
-//    LazyRow(
-//      horizontalArrangement = Arrangement.spacedBy(8.dp),
-//      modifier = Modifier
-//        .padding(8.dp, 0.dp)
-//    ) {
-//      itemsIndexed(recipesList.value!!) { _: Int, recipe: RecipeDto ->
-//        Box(
-//          modifier = Modifier
-//            .background(Color.LightGray)
-//            .height(64.dp)
-//            .width(64.dp)
-//        ) {
-//          Text(
-//            text = "${recipe.name.substring(0, 3)}...",
-//            modifier = Modifier.align(Alignment.Center)
-//          )
-//        }
-//      }
-//    }
+    Row(
+      modifier = Modifier.fillMaxWidth(),
+      horizontalArrangement = Arrangement.End
+    ) {
+      Box(
+        modifier = Modifier
+          .width(32.dp)
+          .height(32.dp)
+          .background(Color.LightGray),
+      ) {
+        Icon(
+          imageVector = Icons.AutoMirrored.Default.List,
+          contentDescription = "New Recipe",
+          modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+        )
+      }
+    }
   }
 }
