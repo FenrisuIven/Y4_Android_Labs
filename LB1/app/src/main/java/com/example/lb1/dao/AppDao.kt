@@ -8,7 +8,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Update
 import com.example.lb1.entity.CategoryEntity
 import com.example.lb1.entity.IngredientEntity
-import com.example.lb1.entity.NotificationEntity
 import com.example.lb1.entity.RecipeEntity
 
 @Dao

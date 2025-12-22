@@ -48,8 +48,8 @@ fun RecipesScreen(
         RecipeCard(
           recipe = recipe,
           category = runBlocking {
-            Log.d("RecipesScreen", "${recipesVM.getCategoryById(0)}")
-            CategoryDto(0, "Placeholder")
+            recipesVM.getCategoryById(recipe.categoryId);
+//            CategoryDto(0, "Placeholder")
           },
 //          category = CategoryDto(0, "Placeholder"),
           removeAction = {
