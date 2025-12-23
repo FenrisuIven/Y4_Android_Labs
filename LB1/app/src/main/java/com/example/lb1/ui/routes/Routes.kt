@@ -20,11 +20,18 @@ object RecipesScreen: NavigationRoute {
   override val icon: ImageVector? = null
   override val iconId: Int = R.drawable.baseline_soup_kitchen_24
 
-  object NotificationDetailsScreen: NavigationRoute {
+  object RecipeDetailsScreen: NavigationRoute {
     override val startDestination: String = "recipes"
     override val path: String = "details?recipeId={recipeId}"
     override val icon: ImageVector? = null
     override val iconId: Int = R.drawable.baseline_soup_kitchen_24
+  }
+
+  object NewRecipeScreen: NavigationRoute {
+    override val startDestination: String = "recipes"
+    override val path: String = "create"
+    override val icon: ImageVector = Icons.Default.Home
+    override val iconId: Int? = null
   }
 }
 

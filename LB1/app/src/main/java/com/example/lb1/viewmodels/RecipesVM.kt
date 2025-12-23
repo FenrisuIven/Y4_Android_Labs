@@ -1,22 +1,20 @@
 package com.example.lb1.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.example.lb1.MyApp
 import com.example.lb1.repositories.category.CategoryRepository
 import com.example.lb1.repositories.category.dto.CategoryDto
 import com.example.lb1.repositories.category.types.FindOneCategoryPayload
 import com.example.lb1.repositories.recipe.RecipeRepository
+import com.example.lb1.repositories.recipe.dto.CreateRecipeDto
 import com.example.lb1.repositories.recipe.dto.RecipeDto
 import com.example.lb1.repositories.recipe.types.FindOneRecipePayload
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class ViewRecipesVM(app: Application): AndroidViewModel(app) {
+class RecipesVM(app: Application): AndroidViewModel(app) {
   private val recipesRepo: RecipeRepository = (app as MyApp).recipesRepo
   private val categoriesRepo: CategoryRepository = (app as MyApp).categoriesRepo
   private val _recipesList = MutableLiveData(listOf<RecipeDto>());
@@ -56,6 +54,15 @@ class ViewRecipesVM(app: Application): AndroidViewModel(app) {
   suspend fun getCategoryById(id: Int): CategoryDto {
     val target = categoriesRepo.getOne(FindOneCategoryPayload(id, name = ""))
     return CategoryDto(target.id, target.name)
+  }
+
+  suspend fun getCategoryByName(name: String): CategoryDto {
+    val target = categoriesRepo.getOne(FindOneCategoryPayload(id = -1, name));
+    return target;
+  }
+
+  suspend fun createRecipe(name: String, categoryId: Int) {
+    recipesRepo.create(CreateRecipeDto(name, categoryId))
   }
 
   suspend fun removeRecipe(id: Int?) {

@@ -17,21 +17,21 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lb1.repositories.category.dto.CategoryDto
 import com.example.lb1.repositories.recipe.dto.RecipeDto
-import com.example.lb1.viewmodels.ViewRecipesVM
+import com.example.lb1.viewmodels.RecipesVM
 import kotlinx.coroutines.runBlocking
 
 @Composable()
 fun RecipeDetailsScreen(
   modifier: Modifier,
-  notificationId: Int,
-  recipesVM: ViewRecipesVM = viewModel(),
+  recipeId: Int,
+  recipesVM: RecipesVM = viewModel(),
 ) {
   var recipe: RecipeDto? = null
   var category: CategoryDto? = null
 
   runBlocking {
     recipesVM.loadFromDB()
-    recipe = recipesVM.getRecipeById(notificationId)
+    recipe = recipesVM.getRecipeById(recipeId)
     category = recipesVM.getCategoryById(recipe.categoryId)
   }
 

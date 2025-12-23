@@ -1,6 +1,7 @@
 package com.example.lb1.ui.screens.recipes
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,14 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.lb1.repositories.recipe.dto.RecipeDto
 import com.example.lb1.ui.components.RecipeCard
-import com.example.lb1.viewmodels.ViewRecipesVM
+import com.example.lb1.viewmodels.RecipesVM
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 @Composable
 fun RecipesScreen(
   modifier: Modifier,
-  recipesVM: ViewRecipesVM = viewModel(),
+  recipesVM: RecipesVM = viewModel(),
   navController: NavController
 ) {
   val recipesList = recipesVM.recipesList.observeAsState()
@@ -64,7 +65,6 @@ fun RecipesScreen(
             }
           },
           clickAction = { navController.navigate("details?recipeId=${recipe.id}") },
-
         )
       }
     }
@@ -76,7 +76,8 @@ fun RecipesScreen(
         modifier = Modifier
           .width(32.dp)
           .height(32.dp)
-          .background(Color.LightGray),
+          .background(Color.LightGray)
+          .clickable(onClick = { navController.navigate("create") }),
       ) {
         Icon(
           imageVector = Icons.AutoMirrored.Default.List,
