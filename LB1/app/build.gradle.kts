@@ -71,6 +71,9 @@ dependencies {
   implementation(libs.androidx.room.runtime)
   implementation(libs.androidx.material.icons.core)
   ksp(libs.androidx.room.compiler)
+  implementation(libs.retrofit2.retrofit)
+  implementation(libs.retrofit2.retrofit.converter.gson)
+  implementation(libs.google.gson)
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
 
   testImplementation(libs.junit)

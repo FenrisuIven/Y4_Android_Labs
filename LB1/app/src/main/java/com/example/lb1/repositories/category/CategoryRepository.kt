@@ -1,19 +1,27 @@
 package com.example.lb1.repositories.category
 
-import android.util.Log
+import com.example.lb1.api.Api
+import com.example.lb1.api.RetrofitClient
 import com.example.lb1.dao.AppDao
 import com.example.lb1.entity.CategoryEntity
-import com.example.lb1.entity.IngredientEntity
 import com.example.lb1.repositories.category.dto.CategoryDto
 import com.example.lb1.repositories.category.dto.CreateCategoryDto
 import com.example.lb1.repositories.category.dto.UpdateCategoryDto
 import com.example.lb1.repositories.category.types.FindOneCategoryPayload
-import com.example.lb1.repositories.ingredient.dto.CreateIngredientDto
-import com.example.lb1.repositories.ingredient.dto.IngredientDto
-import com.example.lb1.repositories.ingredient.dto.UpdateIngredientDto
-import com.example.lb1.repositories.ingredient.types.FindOneIngredientPayload
 
 class CategoryRepository(private val appDao: AppDao) : CategoryBase {
+  private val retrofit = RetrofitClient.get();
+  private val apiClient = retrofit.create(Api::class.java)
+
+  suspend fun getAllApi(): List<CategoryDto> {
+    val categoriesResponse = apiClient.getCategories();
+    return if (categoriesResponse.isSuccessful) {
+      categoriesResponse.body()?:emptyList()
+    } else {
+      emptyList()
+    }
+  }
+
   override suspend fun getAll(): List<CategoryDto> {
     return appDao.getAllCategories().map { CategoryDto(
       it.id,

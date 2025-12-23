@@ -46,8 +46,6 @@ import androidx.navigation.navArgument
 import com.example.lb1.ui.screens.recipes.NewRecipeScreen
 import com.example.lb1.viewmodels.HomeScreenVM
 
-val homeScreenVM = HomeScreenVM()
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,8 +152,7 @@ fun Lb1App() {
             )
           ) {
             HomeScreen(
-              modifier = Modifier.padding(innerPadding),
-              viewModel = homeScreenVM
+              modifier = Modifier.padding(innerPadding)
             )
           }
           navigation(

@@ -1,25 +1,24 @@
 package com.example.lb1.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.lb1.MyApp
+import com.example.lb1.api.Api
+import com.example.lb1.api.RetrofitClient
+import com.example.lb1.model.Listable
+import com.example.lb1.repositories.AppRepository
 import kotlin.random.Random
 
-data class HomeUiState (
-    val labelIdxValue: Int = 0
-)
+class HomeScreenVM(app: Application) : AndroidViewModel(app) {
+  private val repo: AppRepository = (app as MyApp).appRepo
 
-class HomeScreenVM() : ViewModel() {
-    private val _uiState = MutableLiveData(HomeUiState())
-    val uiState: LiveData<HomeUiState> = _uiState;
+  private val _allDataList = MutableLiveData<List<Listable>>(emptyList())
+  val allDataList: LiveData<List<Listable>> = _allDataList
 
-    fun changeState(minValue: Int = 0, maxValue: Int = 2) {
-        var newIdx = _uiState.value?.labelIdxValue;
-        while (newIdx == _uiState.value?.labelIdxValue) {
-            newIdx = Random.nextInt(from = minValue, until = maxValue);
-        }
-        _uiState.postValue(_uiState.value?.copy(
-            labelIdxValue = newIdx!!
-        ))
-    }
+  suspend fun getAllData() {
+    _allDataList.postValue(repo.getData())
+  }
 }

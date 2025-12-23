@@ -1,18 +1,27 @@
 package com.example.lb1.repositories.recipe
 
+import com.example.lb1.api.Api
+import com.example.lb1.api.RetrofitClient
 import com.example.lb1.dao.AppDao
-import com.example.lb1.entity.IngredientEntity
 import com.example.lb1.entity.RecipeEntity
-import com.example.lb1.repositories.ingredient.dto.CreateIngredientDto
-import com.example.lb1.repositories.ingredient.dto.IngredientDto
-import com.example.lb1.repositories.ingredient.dto.UpdateIngredientDto
-import com.example.lb1.repositories.ingredient.types.FindOneIngredientPayload
 import com.example.lb1.repositories.recipe.dto.CreateRecipeDto
 import com.example.lb1.repositories.recipe.dto.RecipeDto
 import com.example.lb1.repositories.recipe.dto.UpdateRecipeDto
 import com.example.lb1.repositories.recipe.types.FindOneRecipePayload
 
 class RecipeRepository(private val appDao: AppDao) : RecipeBase {
+  private val retrofit = RetrofitClient.get();
+  private val apiClient = retrofit.create(Api::class.java)
+
+  suspend fun getAllApi(): List<RecipeDto> {
+    val recipesResponse = apiClient.getRecipes();
+    return if (recipesResponse.isSuccessful) {
+      recipesResponse.body()?:emptyList()
+    } else {
+      emptyList()
+    }
+  }
+
   override suspend fun getAll(): List<RecipeDto> {
     return appDao.getAllRecipes().map { RecipeDto(
       it.id,

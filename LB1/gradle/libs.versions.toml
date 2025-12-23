@@ -17,6 +17,7 @@ runtimeLivedata = "1.10.0"
 ksp = "2.2.21-2.0.4"
 materialCore = "1.10.1"
 materialIconsCoreVersion = "1.7.8"
+gson = "2.13.2"
 
 [libraries]
 androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
@@ -48,6 +49,7 @@ retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref =
 retrofit2-retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 androidx-compose-material = { group = "androidx.compose.material", name = "material-icons-core" }
 androidx-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core", version.ref = "materialIconsCoreVersion" }
+google-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

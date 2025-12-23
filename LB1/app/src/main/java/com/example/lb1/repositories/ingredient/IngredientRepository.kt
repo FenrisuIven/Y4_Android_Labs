@@ -1,5 +1,7 @@
 package com.example.lb1.repositories.ingredient
 
+import com.example.lb1.api.Api
+import com.example.lb1.api.RetrofitClient
 import com.example.lb1.dao.AppDao
 import com.example.lb1.entity.IngredientEntity
 import com.example.lb1.repositories.ingredient.dto.CreateIngredientDto
@@ -8,6 +10,18 @@ import com.example.lb1.repositories.ingredient.dto.UpdateIngredientDto
 import com.example.lb1.repositories.ingredient.types.FindOneIngredientPayload
 
 class IngredientRepository(private val appDao: AppDao) : IngredientBase {
+  private val retrofit = RetrofitClient.get();
+  private val apiClient = retrofit.create(Api::class.java)
+
+  suspend fun getAllApi(): List<IngredientDto> {
+    val ingredientsResponse = apiClient.getIngredients();
+    return if (ingredientsResponse.isSuccessful) {
+      ingredientsResponse.body()?:emptyList()
+    } else {
+      emptyList()
+    }
+  }
+
   override suspend fun getAll(): List<IngredientDto> {
     return appDao.getAllIngredients().map { IngredientDto(
       it.id,
