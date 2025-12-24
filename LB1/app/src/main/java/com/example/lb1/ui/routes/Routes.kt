@@ -3,8 +3,8 @@ package com.example.lb1.ui.routes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.lb1.types.NavigationRoute
 import com.example.lb1.R
@@ -12,7 +12,7 @@ import com.example.lb1.R
 object Home: NavigationRoute {
   override val startDestination: String = "main"
   override val path: String = "home"
-  override val icon: ImageVector = Icons.Default.Home
+  override val icon: ImageVector = Icons.Outlined.Home
   override val iconId: Int? = null
 }
 
