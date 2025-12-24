@@ -1,4 +1,4 @@
-package com.example.lb1.ui.components
+package com.example.lb1.ui.screens.recipes.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
