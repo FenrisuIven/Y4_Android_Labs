@@ -69,6 +69,7 @@ fun RecipesScreen(
               recipesVM.removeRecipe(recipe.id)
             }
           },
+          editAction = { navController.navigate("edit?recipeId=${recipe.id}") },
           clickAction = { navController.navigate("details?recipeId=${recipe.id}") },
         )
       }

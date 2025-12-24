@@ -12,6 +12,7 @@ import com.example.lb1.repositories.category.types.FindOneCategoryPayload
 import com.example.lb1.repositories.recipe.RecipeRepository
 import com.example.lb1.repositories.recipe.dto.CreateRecipeDto
 import com.example.lb1.repositories.recipe.dto.RecipeDto
+import com.example.lb1.repositories.recipe.dto.UpdateRecipeDto
 import com.example.lb1.repositories.recipe.types.FindOneRecipePayload
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -19,6 +20,7 @@ import kotlinx.coroutines.runBlocking
 class RecipesVM(app: Application): AndroidViewModel(app) {
   private val recipesRepo: RecipeRepository = (app as MyApp).recipesRepo
   private val categoriesRepo: CategoryRepository = (app as MyApp).categoriesRepo
+
   private val _recipesList = MutableLiveData(listOf<RecipeDto>());
   val recipesList: LiveData<List<RecipeDto>> = _recipesList;
 
@@ -63,6 +65,10 @@ class RecipesVM(app: Application): AndroidViewModel(app) {
 
   suspend fun createRecipe(name: String, categoryId: Int): Long {
     return recipesRepo.create(CreateRecipeDto(name, categoryId))
+  }
+
+  suspend fun updateRecipe(id: Int, name: String, categoryId: Int) {
+    recipesRepo.update(id, UpdateRecipeDto(name, categoryId))
   }
 
   suspend fun updateCategories() {

@@ -9,6 +9,6 @@ interface RecipeBase {
   suspend fun getAll(): List<RecipeDto>
   suspend fun getOne(payload: FindOneRecipePayload): RecipeDto
   suspend fun create(dto: CreateRecipeDto): Long
-  suspend fun update(id: Int, dto: UpdateRecipeDto): RecipeDto?
+  suspend fun update(id: Int, dto: UpdateRecipeDto)
   suspend fun delete(id: Int)
 }

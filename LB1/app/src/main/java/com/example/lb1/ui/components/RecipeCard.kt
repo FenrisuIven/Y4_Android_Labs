@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ fun RecipeCard(
   recipe: RecipeDto,
   category: CategoryDto,
   removeAction: () -> Unit,
+  editAction: () -> Unit,
   clickAction: () -> Unit
 ) {
   Row(
@@ -55,6 +57,17 @@ fun RecipeCard(
           fontWeight = FontWeight.Medium,
           modifier = Modifier.weight(1f)
         )
+        Box(
+          modifier = Modifier
+            .width(24.dp)
+            .height(24.dp)
+            .clickable(onClick = { editAction() })
+        ) {
+          Icon(
+            imageVector = Icons.Default.Create,
+            contentDescription = "Edit Button",
+          )
+        }
         Box(
           modifier = Modifier
             .width(24.dp)

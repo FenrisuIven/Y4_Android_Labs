@@ -43,6 +43,7 @@ import com.example.lb1.ui.theme.Lb1Theme
 import androidx.navigation.NavType
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
+import com.example.lb1.ui.screens.recipes.EditRecipeScreen
 import com.example.lb1.ui.screens.recipes.NewRecipeScreen
 import com.example.lb1.viewmodels.HomeScreenVM
 
@@ -201,6 +202,23 @@ fun Lb1App() {
               NewRecipeScreen(
                 modifier = Modifier.padding(innerPadding),
                 onInsertSuccess = { navController.navigateUp() }
+              )
+            }
+            composable(
+              route = RecipesScreen.EditRecipeScreen.path,
+              arguments = listOf(
+                navArgument("label") {
+                  type = NavType.StringType
+                  defaultValue = "Edit Recipe Screen"
+                }
+              )
+            ) { navBackStackEntry ->
+              val recipeId = navBackStackEntry.arguments?.getString("recipeId")
+
+              EditRecipeScreen (
+                modifier = Modifier.padding(innerPadding),
+                recipeId = recipeId!!.toInt(),
+                onUpdateAction = { navController.navigateUp() }
               )
             }
           }

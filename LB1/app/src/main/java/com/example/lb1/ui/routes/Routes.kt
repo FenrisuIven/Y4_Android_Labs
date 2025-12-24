@@ -33,6 +33,13 @@ object RecipesScreen: NavigationRoute {
     override val icon: ImageVector = Icons.Default.Home
     override val iconId: Int? = null
   }
+
+  object EditRecipeScreen: NavigationRoute {
+    override val startDestination: String = "recipes"
+    override val path: String = "edit?recipeId={recipeId}"
+    override val icon: ImageVector = Icons.Default.Home
+    override val iconId: Int? = null
+  }
 }
 
 object More: NavigationRoute {
