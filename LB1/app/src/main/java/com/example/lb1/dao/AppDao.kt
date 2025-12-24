@@ -46,6 +46,9 @@ interface AppDao {
   @Insert(onConflict = OnConflictStrategy.ABORT)
   suspend fun createCategory(category: CategoryEntity)
 
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  suspend fun insertUniqueCategories(categories: List<CategoryEntity>)
+
   @Update(onConflict = OnConflictStrategy.ABORT)
   suspend fun updateCategory(category: CategoryEntity)
 

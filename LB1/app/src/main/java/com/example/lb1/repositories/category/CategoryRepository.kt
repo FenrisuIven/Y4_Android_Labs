@@ -48,6 +48,13 @@ class CategoryRepository(private val appDao: AppDao) : CategoryBase {
     ))
   }
 
+  suspend fun insertUnique(dto: List<CategoryDto>) {
+    val apiEntries = getAllApi();
+    appDao.insertUniqueCategories(apiEntries.map { CategoryEntity(
+      it.id, it.name
+    ) })
+  }
+
   override suspend fun update(id: Int, dto: UpdateCategoryDto): CategoryDto? {
     appDao.updateCategory(CategoryEntity(
       id,

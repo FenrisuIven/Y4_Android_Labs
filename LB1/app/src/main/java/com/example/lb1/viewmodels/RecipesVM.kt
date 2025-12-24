@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.lb1.MyApp
 import com.example.lb1.repositories.category.CategoryRepository
 import com.example.lb1.repositories.category.dto.CategoryDto
@@ -12,6 +13,7 @@ import com.example.lb1.repositories.recipe.RecipeRepository
 import com.example.lb1.repositories.recipe.dto.CreateRecipeDto
 import com.example.lb1.repositories.recipe.dto.RecipeDto
 import com.example.lb1.repositories.recipe.types.FindOneRecipePayload
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class RecipesVM(app: Application): AndroidViewModel(app) {
@@ -31,7 +33,7 @@ class RecipesVM(app: Application): AndroidViewModel(app) {
   }
 
   fun loadFromDB() {
-    runBlocking {
+    viewModelScope.launch {
       loadAll();
     }
   }
@@ -55,18 +57,17 @@ class RecipesVM(app: Application): AndroidViewModel(app) {
     val target = categoriesRepo.getOne(FindOneCategoryPayload(id, name = ""))
     return CategoryDto(target.id, target.name)
   }
-
-  suspend fun getCategoryByName(name: String): CategoryDto {
-    val target = categoriesRepo.getOne(FindOneCategoryPayload(id = -1, name));
-    return target;
-  }
-
   suspend fun getAllCategories(): List<CategoryDto> {
     return categoriesRepo.getAll()
   }
 
   suspend fun createRecipe(name: String, categoryId: Int): Long {
     return recipesRepo.create(CreateRecipeDto(name, categoryId))
+  }
+
+  suspend fun updateCategories() {
+    val dto = categoriesRepo.getAllApi();
+    categoriesRepo.insertUnique(dto)
   }
 
   suspend fun removeRecipe(id: Int?) {

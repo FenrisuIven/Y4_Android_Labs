@@ -1,5 +1,6 @@
 package com.example.lb1.ui.screens.recipes
 
+import android.graphics.Paint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,12 +18,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -72,19 +75,36 @@ fun RecipesScreen(
     }
     Row(
       modifier = Modifier.fillMaxWidth().padding(8.dp),
-      horizontalArrangement = Arrangement.End
+      horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
       Box(
         modifier = Modifier
           .width(32.dp)
           .height(32.dp)
-          .background(Color.LightGray, RoundedCornerShape(8.dp))
+          .background(Color.LightGray)
           .clickable(onClick = { navController.navigate("create") }),
+        contentAlignment = Alignment.Center
       ) {
         Icon(
           imageVector = Icons.Default.Add,
           contentDescription = "New Recipe",
-          modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+        )
+      }
+      Box(
+        modifier = Modifier
+          .width(32.dp)
+          .height(32.dp)
+          .background(Color.LightGray)
+          .clickable(onClick = {
+            scope.launch {
+              recipesVM.updateCategories()
+            }
+          }),
+        contentAlignment = Alignment.Center
+        ) {
+        Icon(
+          imageVector = Icons.Default.Refresh,
+          contentDescription = "Update Categories",
         )
       }
     }
