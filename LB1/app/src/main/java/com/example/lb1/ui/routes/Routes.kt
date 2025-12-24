@@ -1,6 +1,8 @@
 package com.example.lb1.ui.routes
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -18,26 +20,26 @@ object RecipesScreen: NavigationRoute {
   override val startDestination: String = "recipes"
   override val path: String = "recipes"
   override val icon: ImageVector? = null
-  override val iconId: Int = R.drawable.baseline_soup_kitchen_24
+  override val iconId: Int = R.drawable.outline_chef_hat_24
 
   object RecipeDetailsScreen: NavigationRoute {
     override val startDestination: String = "recipes"
     override val path: String = "details?recipeId={recipeId}"
     override val icon: ImageVector? = null
-    override val iconId: Int = R.drawable.baseline_soup_kitchen_24
+    override val iconId: Int = R.drawable.outline_chef_hat_24
   }
 
   object NewRecipeScreen: NavigationRoute {
     override val startDestination: String = "recipes"
     override val path: String = "create"
-    override val icon: ImageVector = Icons.Default.Home
+    override val icon: ImageVector = Icons.Default.Add
     override val iconId: Int? = null
   }
 
   object EditRecipeScreen: NavigationRoute {
     override val startDestination: String = "recipes"
     override val path: String = "edit?recipeId={recipeId}"
-    override val icon: ImageVector = Icons.Default.Home
+    override val icon: ImageVector = Icons.Default.Create
     override val iconId: Int? = null
   }
 }

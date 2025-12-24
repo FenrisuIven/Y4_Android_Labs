@@ -13,15 +13,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.fromColorLong
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lb1.model.Recipe
 import com.example.lb1.model.RecipesList
+import com.example.lb1.R
 
 @Composable
 fun RecipesCardList(list: RecipesList) {
@@ -58,8 +63,15 @@ fun RecipeCard(recipe: Recipe) {
       Modifier
         .background(Color.Red)
         .width(40.dp)
-        .height(40.dp)
-    ) {}
+        .height(40.dp),
+      contentAlignment = Alignment.Center
+    ) {
+      Icon(
+        imageVector = ImageVector.vectorResource(R.drawable.outline_chef_hat_24),
+        contentDescription = "Recipe Card",
+        tint = Color.hsl(0f, 0.830f, 0.32f)
+      )
+    }
     Text(
       text = recipe.name
     )
