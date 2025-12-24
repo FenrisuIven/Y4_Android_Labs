@@ -61,8 +61,12 @@ class RecipesVM(app: Application): AndroidViewModel(app) {
     return target;
   }
 
-  suspend fun createRecipe(name: String, categoryId: Int) {
-    recipesRepo.create(CreateRecipeDto(name, categoryId))
+  suspend fun getAllCategories(): List<CategoryDto> {
+    return categoriesRepo.getAll()
+  }
+
+  suspend fun createRecipe(name: String, categoryId: Int): Long {
+    return recipesRepo.create(CreateRecipeDto(name, categoryId))
   }
 
   suspend fun removeRecipe(id: Int?) {

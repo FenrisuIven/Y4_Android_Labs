@@ -63,8 +63,8 @@ interface AppDao {
   @Query("SELECT * FROM recipes WHERE name = :name")
   suspend fun findOneRecipe(name: String): RecipeEntity
 
-  @Insert(onConflict = OnConflictStrategy.ABORT)
-  suspend fun createRecipe(recipe: RecipeEntity)
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
+  suspend fun createRecipe(recipe: RecipeEntity): Long
 
   @Update(onConflict = OnConflictStrategy.ABORT)
   suspend fun updateRecipe(recipe: RecipeEntity)

@@ -200,6 +200,7 @@ fun Lb1App() {
             ) {
               NewRecipeScreen(
                 modifier = Modifier.padding(innerPadding),
+                onInsertSuccess = { navController.navigateUp() }
               )
             }
           }

@@ -13,8 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -69,18 +71,18 @@ fun RecipesScreen(
       }
     }
     Row(
-      modifier = Modifier.fillMaxWidth(),
+      modifier = Modifier.fillMaxWidth().padding(8.dp),
       horizontalArrangement = Arrangement.End
     ) {
       Box(
         modifier = Modifier
           .width(32.dp)
           .height(32.dp)
-          .background(Color.LightGray)
+          .background(Color.LightGray, RoundedCornerShape(8.dp))
           .clickable(onClick = { navController.navigate("create") }),
       ) {
         Icon(
-          imageVector = Icons.AutoMirrored.Default.List,
+          imageVector = Icons.Default.Add,
           contentDescription = "New Recipe",
           modifier = Modifier.fillMaxWidth().fillMaxHeight(),
         )

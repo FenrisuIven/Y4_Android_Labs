@@ -8,7 +8,7 @@ import com.example.lb1.repositories.recipe.types.FindOneRecipePayload
 interface RecipeBase {
     suspend fun getAll(): List<RecipeDto>
     suspend fun getOne(payload: FindOneRecipePayload): RecipeDto
-    suspend fun create(dto: CreateRecipeDto)
-    suspend fun update(id: Int, dto: UpdateRecipeDto): RecipeDto?
-    suspend fun delete(id: Int): Boolean
+    suspend fun create(dto: CreateRecipeDto): Long
+  suspend fun update(id: Int, dto: UpdateRecipeDto): RecipeDto?
+    suspend fun delete(id: Int)
 }

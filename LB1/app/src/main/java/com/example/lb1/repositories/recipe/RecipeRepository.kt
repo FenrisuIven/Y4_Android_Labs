@@ -43,13 +43,14 @@ class RecipeRepository(private val appDao: AppDao) : RecipeBase {
     )
   }
 
-  override suspend fun create(dto: CreateRecipeDto) {
-    appDao.createRecipe(RecipeEntity(
+  override suspend fun create(dto: CreateRecipeDto): Long  {
+    val insertedId = appDao.createRecipe(RecipeEntity(
         0,
         dto.name,
         dto.categoryId
       )
     )
+    return insertedId
   }
 
   override suspend fun update(id: Int, dto: UpdateRecipeDto): RecipeDto? {
@@ -66,10 +67,8 @@ class RecipeRepository(private val appDao: AppDao) : RecipeBase {
     )
   }
 
-  override suspend fun delete(id: Int): Boolean {
+  override suspend fun delete(id: Int) {
     val target = appDao.getOneRecipe(id)
     appDao.deleteRecipe(target)
-
-    return appDao.getOneRecipe(id) == null
   }
 }

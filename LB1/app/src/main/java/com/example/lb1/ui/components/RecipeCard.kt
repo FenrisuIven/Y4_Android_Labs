@@ -37,7 +37,7 @@ fun RecipeCard(
     Box(
       modifier = Modifier
         .width(8.dp)
-        .height(116.dp)
+        .height(64.dp)
         .background(Color.Gray)
     )
 
@@ -71,7 +71,7 @@ fun RecipeCard(
       Box(
         modifier = Modifier
           .fillMaxWidth()
-          .height(88.dp)
+          .height(36.dp)
           .background(Color.LightGray)
           .padding(8.dp, 0.dp)
       ) {
