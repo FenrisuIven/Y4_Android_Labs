@@ -54,7 +54,6 @@ fun EditRecipeScreen(
     if (selectedOption.id == -1) return;
 
     runBlocking {
-      Log.d("DEBUG", "$recipeId, $name, ${selectedOption.id}")
       recipesVM.updateRecipe(recipeId, name, categoryId = selectedOption.id)
 
       onUpdateAction()
@@ -105,8 +104,6 @@ fun EditRecipeScreen(
             onClick = {
               selectedOption = item
               expanded = false
-
-              Log.d("DEBUG", "$item, $selectedOption")
             },
             contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
           )

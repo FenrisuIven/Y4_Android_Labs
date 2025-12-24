@@ -14,6 +14,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,7 +40,7 @@ fun NewRecipeScreen(
 
   var expanded by remember { mutableStateOf(false) }
 
-  runBlocking {
+  LaunchedEffect(Unit) {
     categories = recipesVM.getAllCategories()
   }
 
@@ -49,8 +50,6 @@ fun NewRecipeScreen(
 
     runBlocking {
       val res = recipesVM.createRecipe(name, categoryId = selectedOption.id);
-
-      Log.d("DEBUG", "Insert res: $res")
 
       if (res != (-1).toLong()) onInsertSuccess()
     }

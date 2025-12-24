@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.livedata.observeAsState
@@ -40,7 +41,7 @@ fun RecipesScreen(
   val recipesList = recipesVM.recipesList.observeAsState()
   val scope = rememberCoroutineScope()
 
-  runBlocking {
+  LaunchedEffect(Unit) {
     recipesVM.loadFromDB()
     recipesVM.getAllRecipes()
   }
