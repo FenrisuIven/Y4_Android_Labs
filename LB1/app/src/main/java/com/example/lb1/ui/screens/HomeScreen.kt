@@ -59,10 +59,9 @@ fun HomeScreen(
       contentPadding = PaddingValues(horizontal = 8.dp)
     ) {
       items(allDataList) { listItem ->
-        Log.d("DEBUG", "$listItem")
         when (listItem) {
-          is RecipesList -> RecipesCardList(listItem)
           is CategoriesList -> CategoriesCardList(listItem)
+          is RecipesList -> RecipesCardList(listItem)
           is IngredientsList -> IngredientsCardList(listItem)
           else -> {}
         }
@@ -72,9 +71,54 @@ fun HomeScreen(
 }
 
 @Composable
+fun CategoriesCardList(list: CategoriesList) {
+  Column(
+    Modifier.heightIn(min = 80.dp),
+    verticalArrangement = Arrangement.spacedBy(10.dp)
+  ) {
+    Text(
+      text = "Categories",
+      Modifier.fillMaxWidth(),
+      fontSize = 20.sp
+    )
+    LazyRow(
+      modifier = Modifier.fillMaxWidth().weight(1f),
+      horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+      items(list.categories) {
+        CategoryCard(it)
+      }
+    }
+  }
+}
+
+@Composable
+fun CategoryCard(category: Category) {
+  Row(
+    Modifier
+      .fillMaxWidth()
+      .padding(horizontal = 16.dp),
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.spacedBy(16.dp)
+  ) {
+    Box(
+      Modifier
+        .background(Color.Yellow)
+        .width(40.dp)
+        .height(40.dp)
+    ) {}
+    Text(
+      text = category.name
+    )
+  }
+}
+
+
+@Composable
 fun RecipesCardList(list: RecipesList) {
   Column(
-    Modifier.heightIn(min = 224.dp).fillMaxHeight()
+    Modifier.heightIn(min = 304.dp).fillMaxHeight(),
+    verticalArrangement = Arrangement.spacedBy(10.dp)
   ) {
     Text(
       text = "Recipes",
@@ -114,51 +158,10 @@ fun RecipeCard(recipe: Recipe) {
 }
 
 @Composable
-fun CategoriesCardList(list: CategoriesList) {
-  Column(
-    Modifier.heightIn(min = 224.dp).fillMaxHeight()
-  ) {
-    Text(
-      text = "Categories",
-      Modifier.fillMaxWidth(),
-      fontSize = 20.sp
-    )
-    LazyColumn(
-      modifier = Modifier.fillMaxWidth().weight(1f),
-      verticalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-      items(list.categories) {
-        CategoryCard(it)
-      }
-    }
-  }
-}
-
-@Composable
-fun CategoryCard(category: Category) {
-  Row(
-    Modifier
-      .fillMaxWidth()
-      .padding(horizontal = 16.dp),
-    verticalAlignment = Alignment.CenterVertically,
-    horizontalArrangement = Arrangement.spacedBy(24.dp)
-  ) {
-    Box(
-      Modifier
-        .background(Color.Yellow)
-        .width(40.dp)
-        .height(40.dp)
-    ) {}
-    Text(
-      text = category.name
-    )
-  }
-}
-
-@Composable
 fun IngredientsCardList(list: IngredientsList) {
   Column(
-    Modifier.heightIn(min = 224.dp).fillMaxHeight()
+    Modifier.heightIn(min = 304.dp).fillMaxHeight(),
+    verticalArrangement = Arrangement.spacedBy(10.dp)
   ) {
     Text(
       text = "Ingredients",

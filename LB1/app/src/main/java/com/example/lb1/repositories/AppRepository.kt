@@ -29,8 +29,8 @@ class AppRepository(private val appDao: AppDao) {
       Ingredient(id = it.id.toLong(), name = it.name)
     }
 
-    lists = lists.plus(RecipesList(0, recipes))
-    lists = lists.plus(CategoriesList(1, categories))
+    lists = lists.plus(CategoriesList(0, categories))
+    lists = lists.plus(RecipesList(1, recipes))
     lists = lists.plus(IngredientsList(2, ingredients))
 
     return lists;
